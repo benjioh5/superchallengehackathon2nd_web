@@ -1,10 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
-
-	{% if weather_data %}
-	<h2>{{ weather_data | safe }}</h2>
+	{% if weather_img %}
+		<h3>{{ weather_img | safe }}</h3>
 	{% endif %}
-  {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+	{% if weather_data %}
+		<h3>{{ weather_data | safe }}</h3>
+	{% endif %}
+ 	{% if error %}
+  		<p class="error"><strong>Error:</strong> {{ error }} </p>
+  	{% endif %}
   <form action="{{ url_for('front') }}" method="post">
   </form>
 {% endblock %}

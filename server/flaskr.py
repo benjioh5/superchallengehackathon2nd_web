@@ -50,6 +50,7 @@ class User(object):
                 error = "Invalid"
             else:
                 session['logged_in'] = True
+                session['email'] = self.email
                 self.signed_in = True
                 self.name = self.db.execute('select username from userdata where email=\'' + request.form['email'] + '\'').fetchone()
                 flash('Welcom ' + self.name[0])
@@ -108,12 +109,12 @@ def front():
     #db = get_db()
     #cur = db.execute('select title, text from entries order by id desc')
     #entries = cur.fetchall()
-	w_req = urllib2.Request("http://weather.yahooapis.com/forecastrss?w=1132599&u=c")
+	w_req = urllib2.Request("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys")
 	w_res = urllib2.urlopen(w_req)
 	soup = BeautifulSoup(w_res)
 	weather_data = soup.item.description.string
-
-	return render_template('front.html', weather_data=weather_data)
+    #weather_img = soup.item.description.img
+	return render_template('front.html', year=2017, weather_data=weather_data)
 
 
 @app.route('/add', methods=['POST'])
@@ -142,7 +143,7 @@ def signup():
             error = user.signup(email, name, pwss, pwsc)
         return render_redirect('signup.html', 'signin', error)
     else:
-        return render_template('signup.html', error=error)
+        return render_template('signup.html',year=2017, error=error)
 
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
@@ -168,7 +169,8 @@ def signout():
 @app.route('/mypage')
 def mypage():
     error = None
-
+    if not session.get('email') :
+        abort(401)
     return render_template('mypage.html', error=error)
 
 if __name__ == "__main__":
