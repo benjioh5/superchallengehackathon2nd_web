@@ -10,6 +10,7 @@ import urllib2
 from bs4 import BeautifulSoup
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 from contextlib import closing
+from flask_socketio import SocketIO, send, emit
 
 app = Flask(__name__)
 app.config.update(dict(
@@ -20,6 +21,7 @@ app.config.update(dict(
     PASSWORD='default'
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+socketio = SocketIO(app)
 
 def render_redirect(template, url, error):
     if error == None:
@@ -104,6 +106,39 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
+"""
+    This part is chat system.
+"""
+
+@socketio.on('message',namespace='/test')
+def handleMessage(msg):
+    print('Message : ' + msg)
+    send(msg, broadcast=True)
+
+"""
+@socketio.on('my event', namespace='/test')
+def test_message(message):
+    emit('my response', {'data': message['data']})
+
+@socketio.on('my broadcast event', namespace='/test')
+def test_message(message):
+    emit('my response', {'data': message['data']}, broadcast=True)
+
+@socketio.on('connect', namespace='/test')
+def test_connect():
+    emit('my response', {'data': 'Connected'})
+
+@socketio.on('disconnect', namespace='/test')
+def test_disconnect():
+    print('Client disconnected')
+"""
+
+"""
+    view part
+"""
+
+
+
 @app.route('/')
 def front():
     #db = get_db()
@@ -173,5 +208,9 @@ def mypage():
         abort(401)
     return render_template('mypage.html', error=error)
 
-if __name__ == "__main__":
-	app.run(host='0.0.0.0', port = 5000)
+@app.route('/test')
+def chat():
+    return render_template('chating.html', year=2017)
+
+if __name__ == '__main__':
+	socketio.run(app,host='0.0.0.0', port = 5000)

@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Studio :D</title>
   <meta charset="utf-8" />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+  <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../static/content/bootstrap.min.css" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
   <link rel="stylesheet" type="text/css" href="../static/content/site.css" />
@@ -37,6 +39,7 @@
           <li><a href="{{ url_for('signout') }}">Sign Out</a></li>
           <li><a href="{{ url_for('mypage') }}">My Page</a></li>
           {% endif %}
+          <li><a href="{{ url_for('chat') }}">Chatting</a></li>
         </ul>
       </div>
     </div>
@@ -55,7 +58,7 @@
       <p>&copy; {{ year }} - My Flask Application</p>
     </footer>
   </div>
-  <script src="../static/scripts/jquery-1.10.2.js"></script>
+  <!--<script src="../static/scripts/jquery-1.10.2.js"></script>-->
   <script src="../static/scripts/bootstrap.js"></script>
   <script src="../static/scripts/respond.js"></script>
 </body>
