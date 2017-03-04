@@ -2,15 +2,14 @@
 {% block body %}
 <br/>
 <h1><strong> Front Page </strong></h1>
-	{% if weather_img %}
-		<h3>{{ weather_img | safe }}</h3>
-	{% endif %}
+<hr class="hr-tag-color"/>
 	{% if weather_data %}
 		<h3>{{ weather_data | safe }}</h3>
 	{% endif %}
  	{% if error %}
   		<p class="error"><strong>Error:</strong> {{ error }} </p>
   	{% endif %}
+  <br/>
   <form action="{{ url_for('front') }}" method="post">
   </form>
 {% endblock %}

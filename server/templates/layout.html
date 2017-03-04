@@ -15,6 +15,13 @@
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='override.css') }}">
+  <style>
+    .hr-tag-color{
+      margin-top:12px;
+      margin-bottom:12px;
+      border-top: 2px solid black;
+    }
+  </style>
 </head>
 <body>
   <div class="navbar navbar-inverse navbar-fixed-top">
@@ -53,12 +60,12 @@
       </div>
     {% endfor %}
     {% block body %}{% endblock %}
-    <hr/>
+    <hr class="hr-tag-color"/>
     <footer>
       <p>&copy; {{ year }} - My Flask Application</p>
     </footer>
   </div>
-  <!--<script src="../static/scripts/jquery-1.10.2.js"></script>-->
+
   <script src="../static/scripts/bootstrap.js"></script>
   <script src="../static/scripts/respond.js"></script>
 </body>

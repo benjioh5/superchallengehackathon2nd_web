@@ -2,7 +2,7 @@
 {% block body %}
 <br/>
 <h1><strong> Chat Room </strong></h1>
-
+<hr class="hr-tag-color"/>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
@@ -12,7 +12,7 @@
 		});
 
 		socket.on('message', function(msg){
-			$("#messages").append('<p>' + msg + '</p>');
+			$("#messages").append('<li> >>> ' + msg + '</li>');
 			console.log('Received messages');
 		});
 
@@ -23,6 +23,35 @@
 	});
 </script>
 
+<style>
+    .chat-box {
+        display: inline-block;
+        color: #34495e;
+        margin: 0 0 0 0;
+    }
+ 
+	.chat-box li {
+	    display: table;
+	    padding: 10px;
+	    margin: 7px 10px;
+	    font-size: 15px;
+	    line-height: 25px;
+	    background-color: #C1E4EC;
+	 
+	    -webkit-border-top-left-radius: 6px;
+	    -webkit-border-top-right-radius: 6px;
+	    -webkit-border-bottom-right-radius: 6px;
+	    -webkit-border-bottom-left-radius: 6px;
+	    -moz-border-radius-topleft: 6px;
+	    -moz-border-radius-topright: 6px;
+	    -moz-border-radius-bottomright: 6px;
+	    -moz-border-radius-bottomleft: 6px;
+	    border-top-left-radius: 6px;
+	    border-top-right-radius: 6px;
+	    border-bottom-right-radius: 6px;
+	    border-bottom-left-radius: 6px;
+	}
+</style>
 <!--
 <script type="text/javascript">
 $(document).ready(function(){
@@ -42,7 +71,8 @@ $(document).ready(function(){
 </script>
 -->
 
-<div id="messages"></div>
-<input type="text" id="myMessage">
-<button id="sendButton"> click </button>
+<div id="messages" class="chat-box"></div>
+<br/>
+<input type="text" size="30" id="myMessage">
+<button id="sendButton"> 입력 </button>
 {% endblock %}
