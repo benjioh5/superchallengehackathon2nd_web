@@ -6,7 +6,6 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
-
 		socket.on('connect', function(){
 			socket.send('User has connected!');
 		});
@@ -16,7 +15,13 @@
 			console.log('Received messages');
 		});
 
-		$('#sendButton').on('click', function(){
+		$('#myMessage').keyup(function(event){
+			if(event.keyCode == 13){
+				$('#sendButton').click();
+			}
+		});
+
+		$('#sendButton').on('click',function(){
 			socket.send($('#myMessage').val());
 			$('#myMessage').val('');
 		});
@@ -24,6 +29,11 @@
 </script>
 
 <style>
+	.chat-background{
+		background-color:#C1E4EC;
+		margin-bottom:10px;
+	}
+
     .chat-box {
         display: inline-block;
         color: #34495e;
@@ -36,7 +46,7 @@
 	    margin: 7px 10px;
 	    font-size: 15px;
 	    line-height: 25px;
-	    background-color: #C1E4EC;
+	    background-color: #fff;
 	 
 	    -webkit-border-top-left-radius: 6px;
 	    -webkit-border-top-right-radius: 6px;
@@ -70,9 +80,9 @@ $(document).ready(function(){
 });
 </script>
 -->
-
-<div id="messages" class="chat-box"></div>
-<br/>
+<div class="chat-background">
+	<div id="messages" class="chat-box"></div>
+</div>
 <input type="text" size="30" id="myMessage">
 <button id="sendButton"> 입력 </button>
 {% endblock %}
